@@ -28,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const lastEntry = storedData[lastKey];
     if (lastEntry) {
         lastMonthReadingInput.value = lastEntry.meterReading;
-    }
-    waterCostInput.value = "100";
-
-    
+        perUnitCostInput.value = lastEntry.perUnitCost;
+        waterCostInput.value = lastEntry.waterCost;
+    }    
 
     submitBtn.addEventListener('click', () => {
         const lastMonthReading = parseFloat(lastMonthReadingInput.value);
         const meterReading = parseFloat(meterReadingInput.value);
+        const perUnitCost = parseFloat(perUnitCostInput.value);
         const waterCost = parseFloat(waterCostInput.value);
         const advance = parseFloat(advanceInput.value);
 
@@ -63,13 +63,28 @@ document.addEventListener('DOMContentLoaded', () => {
         thisMonth.textContent = meterReading;
         lastMonth.textContent = lastMonthReading;
         unitConsumed.textContent = meterReading - lastMonthReading;
-        money.textContent = (meterReading - lastMonthReading) * 0.6;
+        money.textContent = (meterReading - lastMonthReading) * perUnitCost;
         waterCostDis.textContent = waterCost;
-        tMoney.textContent = (meterReading - lastMonthReading) * 0.6 + waterCost;
+        tMoney.textContent = (meterReading - lastMonthReading) * perUnitCost + waterCost;
         advanceDis.textContent = advance;
-        gtMoney.textContent = (meterReading - lastMonthReading) * 0.6 + waterCost + advance;
+        gtMoney.textContent = (meterReading - lastMonthReading) * perUnitCost + waterCost + advance;
 
-        resultContainer.classList.remove('hidden');
+        localStorage.setItem('meterReadingData', JSON.stringify({
+            ...storedData,
+            [new Date().toLocaleDateString()]: {
+                date: new Date().toLocaleDateString(),
+                meterReading: meterReading,
+                lastMeterReading: lastMonthReading,
+                perUnitCost: perUnitCost,
+                waterCost: waterCost,
+                unit_consumed: meterReading - lastMonthReading,
+                money: (meterReading - lastMonthReading) * perUnitCost,
+                watercost: waterCost,
+                tmoney: (meterReading - lastMonthReading) * perUnitCost + waterCost,
+                advance: advance,
+                gt_money: (meterReading - lastMonthReading) * perUnitCost + waterCost + advance
+            }
+        }))
         lastMonthReadingInput.value = '';
         meterReadingInput.value = '';
         waterCostInput.value = '';
