@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meter Reading App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="icon" href="static/images/favicon.png" >
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="/static/images/favicon.png" >
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <script src="static/script.js"></script>
 </head>
 
 <body>
@@ -14,14 +15,14 @@
 
     <div id="data">
         <button id="detailsBtn" class="dataBtn">
-            <img src="{{ url_for('static', filename='images/details.png') }}" alt="details" class="button-icon">
+            <img src="/static/images/details.png" alt="details" class="button-icon">
         </button>
     </div>
 
     <div id="detailsSlideArea" class="slide">
         <div id="backArea">
             <button id="detailsBackButton">
-                <img src="{{ url_for('static', filename='images/back.png') }}" alt="Back" class="back_button-icon">
+                <img src="/static/images/back.png" alt="Back" class="back_button-icon">
             </button>
         </div>
         <div id="detailsArea">
@@ -87,9 +88,9 @@
         <h6>Grand Total: ₹ <span id="gtMoney"></span></h6>
     </div>
 
-    <audio id="submitSound" src="{{ url_for('static', filename='sounds/submit_sound.mp3') }}"></audio>
+    <audio id="submitSound" src="/static/sounds/submit.mp3"></audio>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
 </body>
 
 </html>
