@@ -4,6 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const keys = Object.keys(storedData);
     keys.sort();
 
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((reg) => console.log('Service Worker registered', reg))
+            .catch((err) => console.error('Service Worker registration failed', err));
+    } else {
+        console.warn('Service Worker not supported in this browser.');
+    }
+
     document.getElementById('detailsBackButton').addEventListener('click', () => {
         document.getElementById('detailsSlideArea').style.right = '-100%';
     });
@@ -29,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lastEntry) {
         lastMonthReadingInput.value = lastEntry.meterReading;
         perUnitCostInput.value = lastEntry.perUnitCost;
-        waterCostInput.value = lastEntry.waterCost;
+ waterCostInput.value = lastEntry.waterCost || ''; // Handle cases where waterCost might be missing
     }    
 
     submitBtn.addEventListener('click', () => {
@@ -39,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const waterCost = parseFloat(waterCostInput.value);
         const advance = parseFloat(advanceInput.value);
 
-        if (isNaN(lastMonthReading) || isNaN(meterReading) || isNaN(waterCost) || isNaN(advance)) {
+ if (isNaN(lastMonthReading) || isNaN(meterReading) || isNaN(perUnitCost) || isNaN(waterCost) || isNaN(advance)) {
             alert('Please enter valid numbers');
             return;
         }
@@ -63,17 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
         thisMonth.textContent = meterReading;
         lastMonth.textContent = lastMonthReading;
         unitConsumed.textContent = meterReading - lastMonthReading;
-        money.textContent = (meterReading - lastMonthReading) * perUnitCost;
+ money.textContent = ((meterReading - lastMonthReading) * perUnitCost).toFixed(2); // Format to 2 decimal places
         waterCostDis.textContent = waterCost;
-        tMoney.textContent = (meterReading - lastMonthReading) * perUnitCost + waterCost;
+ tMoney.textContent = ((meterReading - lastMonthReading) * perUnitCost + waterCost).toFixed(2); // Format to 2 decimal places
         advanceDis.textContent = advance;
         gtMoney.textContent = (meterReading - lastMonthReading) * perUnitCost + waterCost + advance;
 
-        const now = new Date();
-        const monthKey = `${String(now.getMonth() + 1).padStart(2, '0')}${now.getFullYear()}`;
-
-
-        localStorage.setItem('meterReadingData', JSON.stringify({
+ const newData = {
             ...storedData,
             [monthKey]: {
                 date: new Date().toLocaleDateString(),
@@ -82,13 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 perUnitCost: perUnitCost,
                 waterCost: waterCost,
                 unit_consumed: meterReading - lastMonthReading,
-                money: (meterReading - lastMonthReading) * perUnitCost,
+                money: ((meterReading - lastMonthReading) * perUnitCost).toFixed(2),
                 watercost: waterCost,
-                tmoney: (meterReading - lastMonthReading) * perUnitCost + waterCost,
+                tmoney: ((meterReading - lastMonthReading) * perUnitCost + waterCost).toFixed(2),
                 advance: advance,
-                gt_money: (meterReading - lastMonthReading) * perUnitCost + waterCost + advance
+                gt_money: ((meterReading - lastMonthReading) * perUnitCost + waterCost + advance).toFixed(2)
             }
-        }))
+        };
+
+ localStorage.setItem('meterReadingData', JSON.stringify(newData));
+
         lastMonthReadingInput.value = '';
         meterReadingInput.value = '';
         waterCostInput.value = '';

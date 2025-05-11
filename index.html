@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meter Reading App</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <link rel="icon" href="/static/images/favicon.png" >
-    <link rel="manifest" href="/static/manifest.json">
+    <link rel="icon" href="/static/images/favicon.png">
+    <link rel="manifest" href="/static/manifest.json" crossorigin="use-credentials">
     <script src="static/script.js"></script>
 </head>
 
@@ -14,7 +14,7 @@
     <h4>Meter Reading App</h4>
     <div id="data">
         <button id="detailsBtn" class="dataBtn">
-            <img src="/static/images/details.png" alt="details" class="button-icon">
+            <img src="/static/images/details.png" alt="details" class="icon">
         </button>
     </div>
     <div id="detailsSlideArea" class="slide">
@@ -26,7 +26,7 @@
         <div id="detailsArea">
             <div id="detailList" class="details">
                 <p id="detailsTitle">Bill of :</p>
-                <select id="month" name="month" >
+                <select id="month" name="month">
                     <option value="January">January</option>
                     <option value="February">February</option>
                     <option value="March">March</option>
@@ -49,10 +49,10 @@
                 <h3>This Month Reading: <span id="SthisMonth"></span> kWh</h3>
                 <h3>Last Month Reading: <span id="SlastMonth"></span> kWh</h3>
                 <h5>Unit Consumed: <span id="SunitConsumed"></span> kWh</h5>
-                <h6 class="money">Money: ₹ <span id="Smoney" ></span></h6>
+                <h6 class="money">Money: ₹ <span id="Smoney"></span></h6>
                 <h3>Water Cost: ₹ <span id="SwaterCostDis"></span></h3>
                 <h6 class="money">Total: ₹ <span id="StMoney"></span></h6>
-                <h3>Advance: ₹ <span id="SadvanceDis"></span></h3>
+                <h3>Advance: ₹ <span id="SadvanceDis"></span> <img src="/static/images/Circuit Board.svg" alt="details" class="icon"></h3>
                 <h6 class="money">Grand Total: ₹ <span id="SgtMoney"></span></h6>
             </div>
             <div id="nfMsg" class="hidden">
@@ -84,7 +84,7 @@
     <div id="resultContainer" class="hidden">
         <h1>Bill as on <span id="date"></span></h1>
         <h3>This Month Reading: <span id="thisMonth"></span> kWh</h3>
-        <h3>Last Month Reading: <span id="lastMonth"></span> kWh</h3>
+        <h4>Last Month Reading: <span id="lastMonth"></span> kWh</h4>
         <h5>Unit Consumed: <span id="unitConsumed"></span> kWh</h5>
         <h6>Money: ₹ <span id="money"></span></h6>
         <h3>Water Cost: ₹ <span id="waterCostDis"></span></h3>
