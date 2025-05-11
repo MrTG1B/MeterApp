@@ -171,9 +171,9 @@ h3{
     left:85%;
     position: absolute;
     transform: translate(-50%, -50%);
-    display: flex;
-    width: 70px;
-    height: 70px;
+ display: flex;
+    width: 60px; /* Smaller width */
+    height: 60px; /* Smaller height */
     align-items: center;
     justify-content: center;
     cursor: pointer;   
