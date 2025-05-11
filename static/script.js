@@ -69,9 +69,13 @@ document.addEventListener('DOMContentLoaded', () => {
         advanceDis.textContent = advance;
         gtMoney.textContent = (meterReading - lastMonthReading) * perUnitCost + waterCost + advance;
 
+        const now = new Date();
+        const monthKey = `${String(now.getMonth() + 1).padStart(2, '0')}${now.getFullYear()}`;
+
+
         localStorage.setItem('meterReadingData', JSON.stringify({
             ...storedData,
-            [new Date().toLocaleDateString()]: {
+            [monthKey]: {
                 date: new Date().toLocaleDateString(),
                 meterReading: meterReading,
                 lastMeterReading: lastMonthReading,
